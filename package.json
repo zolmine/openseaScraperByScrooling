@@ -1,0 +1,11 @@
+{
+  "name": "node_crapper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/zolmine/nodeScrapper.git",
+  "author": "zolmine",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^16.1.1"
+  }
+}
