@@ -24,26 +24,25 @@ function fetchOffers(dict) {
     // alert(card)
     const floorPrice = _extractFloorPrice(card);
     const name = _extractName(card);
-    // const tokenId = _extractTokenId(card);
-    // const offerUrl = _extractOfferUrl(card);
+    const tokenId = _extractTokenId(card);
+    const offerUrl = _extractOfferUrl(card);
     const displayImageUrl = _extractDisplayImageUrl(card);
-    alert(displayImageUrl)
-    // if (floorPrice && name) {
-    //   const uniqIdentifier = `${name}_${tokenId || "unknownTokenId"}`;
-    //   dict[uniqIdentifier] = {
-    //     name: name,
-    //     tokenId: tokenId,
-    //     floorPrice: floorPrice,
-    //     displayImageUrl: displayImageUrl,
-    //     offerUrl: offerUrl,
-    //   }
-    //   return dict
-    // }
+    if (floorPrice && name) {
+      const uniqIdentifier = `${name}_${tokenId || "unknownTokenId"}`;
+      dict[uniqIdentifier] = {
+        name: name,
+        tokenId: tokenId,
+        floorPrice: floorPrice,
+        displayImageUrl: displayImageUrl,
+        offerUrl: offerUrl,
+      }
+      return dict
+    }
   });
 }
 function _extractName(card) {
   try {
-    return card.querySelector(".AssetCardFooter--name").innerText;
+    return card.children[1].children[0].children[0].children[0].innerText;
   } catch (err) {
 
   }

@@ -7,37 +7,41 @@ const scrapper = async () => {
     const page = await browser.newPage()
     await page.goto('https://opensea.io/collection/cool-cats-nft?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[toggles][0]=BUY_NOW')
     await page.waitForSelector('.cf-browser-verification', {hidden: true});
+    // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
     await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    let [offers, totalOffers] = await Promise.all([
-        _scrollAndFetchOffers(page, 20),
+    let [offers] = await Promise.all([
+      _scrollAndFetchOffers(page, 20),
         _extractTotalOffers(page),
       ]);
+      // await browser.close()
+      
+      console.log(offers);
+    }
     
-      console.log(offers, totalOffers);
-}
-
-scrapper()
-
-
-async function _scrollAndFetchOffers(page, resultSize) {
-    return await page.evaluate((resultSize) => new Promise((resolve) => {
-      // keep in mind inside the browser context we have the global variable "dict" initialized
-      // defined inside src/helpers/offersByScrollingHelperFunctions.js
-      let currentScrollTop = -1;
-      const interval = setInterval(() => {
-        console.log("another scrol... dict.length = " + Object.keys(dict).length);
-        window.scrollBy(0, 50);
-        // fetchOffers is a function that is exposed through page.addScript() and
-        // is defined inside src/helpers/offersByScrollingHelperFunctions.js
-        var data = fetchOffers(dict);
-        console.log(data);
-  
-        const endOfPageReached = document.documentElement.scrollTop === currentScrollTop;
-        const enoughItemsFetched = Object.keys(dict).length >= resultSize;
-  
-        if(!endOfPageReached && !enoughItemsFetched) {
-          currentScrollTop = document.documentElement.scrollTop;
+    scrapper()
+    
+    
+    async function _scrollAndFetchOffers(page, resultSize) {
+      return await page.evaluate((resultSize) => new Promise((resolve) => {
+        // keep in mind inside the browser context we have the global variable "dict" initialized
+        // defined inside src/helpers/offersByScrollingHelperFunctions.js
+        let currentScrollTop = -1;
+        const interval = setInterval(() => {
+          // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
+          window.scrollBy(0, 50);
+          // fetchOffers is a function that is exposed through page.addScript() and
+          // is defined inside src/helpers/offersByScrollingHelperFunctions.js
+          fetchOffers(dict);
+          
+          const endOfPageReached = document.documentElement.scrollTop === currentScrollTop;
+          const enoughItemsFetched = Object.keys(dict).length >= resultSize;
+          
+          if(!endOfPageReached && !enoughItemsFetched) {
+            currentScrollTop = document.documentElement.scrollTop;
+          // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
+          // window.scrollBy(0, -window.innerHeight);
           return;
+
         }
         clearInterval(interval);
         resolve(Object.values(dict));
