@@ -5,7 +5,7 @@ puppeteer.use(StealthPlugin());
 const scrapper = async () => {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
-    await page.goto('https://opensea.io/collection/drc-1?search[sortAscending]=false&search[sortBy]=LISTING_DATE')
+    await page.goto('https://opensea.io/collection/cool-cats-nft?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[toggles][0]=BUY_NOW')
     await page.waitForSelector('.cf-browser-verification', {hidden: true});
     await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
     let [offers, totalOffers] = await Promise.all([
@@ -29,8 +29,8 @@ async function _scrollAndFetchOffers(page, resultSize) {
         window.scrollBy(0, 50);
         // fetchOffers is a function that is exposed through page.addScript() and
         // is defined inside src/helpers/offersByScrollingHelperFunctions.js
-        fetchOffers(dict);
-        console.log(dict);
+        var data = fetchOffers(dict);
+        console.log(data);
   
         const endOfPageReached = document.documentElement.scrollTop === currentScrollTop;
         const enoughItemsFetched = Object.keys(dict).length >= resultSize;

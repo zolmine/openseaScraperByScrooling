@@ -21,21 +21,24 @@ function fetchOffers(dict) {
   const cardsNodeList = document.querySelectorAll(".Asset--anchor");
   const cardsArray = Array.prototype.slice.call(cardsNodeList);
   cardsArray.forEach(card => {
+    // alert(card)
     const floorPrice = _extractFloorPrice(card);
     const name = _extractName(card);
-    const tokenId = _extractTokenId(card);
-    const offerUrl = _extractOfferUrl(card);
+    // const tokenId = _extractTokenId(card);
+    // const offerUrl = _extractOfferUrl(card);
     const displayImageUrl = _extractDisplayImageUrl(card);
-    if (floorPrice && name) {
-      const uniqIdentifier = `${name}_${tokenId || "unknownTokenId"}`;
-      dict[uniqIdentifier] = {
-        name: name,
-        tokenId: tokenId,
-        floorPrice: floorPrice,
-        displayImageUrl: displayImageUrl,
-        offerUrl: offerUrl,
-      }
-    }
+    alert(displayImageUrl)
+    // if (floorPrice && name) {
+    //   const uniqIdentifier = `${name}_${tokenId || "unknownTokenId"}`;
+    //   dict[uniqIdentifier] = {
+    //     name: name,
+    //     tokenId: tokenId,
+    //     floorPrice: floorPrice,
+    //     displayImageUrl: displayImageUrl,
+    //     offerUrl: offerUrl,
+    //   }
+    //   return dict
+    // }
   });
 }
 function _extractName(card) {
@@ -64,20 +67,19 @@ function _extractOfferUrl(card) {
 }
 function _extractDisplayImageUrl(card) {
   try {
-    return card.querySelector("img").src;
+    return card.querySelector('.AssetMedia--img').lastElementChild.children[0].src;
   } catch(err) {
     return undefined;
   }
 }
 function _extractFloorPrice(card) {
   try {
-    const priceSection = card.querySelector(".AssetCardFooter--price-amount");
-    const currencyIsEth = Boolean(priceSection.querySelector(".Price--eth-icon"));
-    const floorPriceStr = priceSection.querySelectorAll(":scope > div")[1].textContent.split(",").join("."); // replace comma with dot
+    const floorPriceStr = card.querySelector('.Price--amount').innerHTML;
+    const currencyIsEth = false;
+    // const floorPriceStr = priceSection.querySelectorAll(":scope > div")[1].textContent.split(",").join("."); // replace comma with dot
     const floorPrice = Number(floorPriceStr);
     return {
       amount: floorPrice,
-      currency: currencyIsEth ? "ETH" : "unknown",
     }
   } catch(err) {
     return undefined;
