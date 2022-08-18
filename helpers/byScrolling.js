@@ -29,6 +29,9 @@ function fetchOffers(dict) {
     const displayImageUrl = _extractDisplayImageUrl(card);
     if (floorPrice && name) {
       const uniqIdentifier = `${name}_${tokenId || "unknownTokenId"}`;
+      if( uniqIdentifier in dict){
+        return dict
+      }
       dict[uniqIdentifier] = {
         name: name,
         tokenId: tokenId,

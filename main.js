@@ -7,19 +7,29 @@ const scrapper = async () => {
     const page = await browser.newPage()
     await page.goto('https://opensea.io/collection/cool-cats-nft?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[toggles][0]=BUY_NOW')
     await page.waitForSelector('.cf-browser-verification', {hidden: true});
-    // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
     await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    let [offers] = await Promise.all([
-      _scrollAndFetchOffers(page, 20),
-        _extractTotalOffers(page),
-      ]);
-      // await browser.close()
+    await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
+    // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
+    
+    offers = await _scrollAndFetchOffers(page, 20)
+    console.log(offers);
+    // const interval = setInterval( async () => {
       
-      console.log(offers);
+      
+    //   // clearInterval(interval);
+    //   await page.evaluate(() => { window.scrollBy(0, -window.innerHeight); });
+    //   // await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
+    // },1000)
+        // await browser.close()
+        
     }
+  
     
     scrapper()
     
+    // async function _reScrap(page,val) {
+    //   return await 
+    // }
     
     async function _scrollAndFetchOffers(page, resultSize) {
       return await page.evaluate((resultSize) => new Promise((resolve) => {
@@ -44,19 +54,19 @@ const scrapper = async () => {
 
         }
         clearInterval(interval);
-        resolve(Object.values(dict));
+        resolve(dict);
       }, 120);
     }), resultSize);
   }
 
-  async function _extractTotalOffers(page) {
-    try {
-      // set timeout to 1 sec, no need to extensively wait since page should be loaded already
-      const element = await page.waitForSelector('.AssetSearchView--results-count', {timeout: 1000});
-      const resultsText = await element.evaluate(el => el.textContent); // grab the textContent from the element, by evaluating this function in the browser context
-      const dotsRemoved = resultsText.replace(/\./g,'');
-      return Number(dotsRemoved.split(" ")[0]);
-    } catch (err) {
-      return undefined;
-    }
-  }
+  // async function _extractTotalOffers(page) {
+  //   try {
+  //     // set timeout to 1 sec, no need to extensively wait since page should be loaded already
+  //     const element = await page.waitForSelector('.AssetSearchView--results-count', {timeout: 1000});
+  //     const resultsText = await element.evaluate(el => el.textContent); // grab the textContent from the element, by evaluating this function in the browser context
+  //     const dotsRemoved = resultsText.replace(/\./g,'');
+  //     return Number(dotsRemoved.split(" ")[0]);
+  //   } catch (err) {
+  //     return undefined;
+  //   }
+  // }
