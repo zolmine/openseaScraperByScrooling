@@ -6,7 +6,7 @@ const scrapper = async () => {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
     await page.goto('https://opensea.io/collection/cool-cats-nft?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[toggles][0]=BUY_NOW')
-    await page.waitForSelector('.cf-browser-verification', {hidden: true});
+    await page.waitForSelector('.cf-browser-verification', {hidden: false});
     await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
     await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
     // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
