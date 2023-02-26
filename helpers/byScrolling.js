@@ -59,13 +59,15 @@ function _extractName(card) {
 }
 function _extractTokenId(card) {
   try {
-    // const href = card.getAttribute("href") || "";
-    const tokenId = href.split("/").slice(-1).pop();
-    return tokenId === "" ? undefined : Number(tokenId); // catch case where tokenId is empty string
-  } catch(err) {
-    return undefined;
+    const href = card.querySelector(".Asset--anchor").getAttribute("href") || ""
+    console.log(href)
+    const tokenId = href.split("/").slice(-1).pop()
+    return tokenId === "" ? undefined : Number(tokenId)
+  } catch(Error) {
+    return undefined
   }
 }
+
 function _extractOfferUrl(card) {
   try {
     const href = card.getAttribute("href");
