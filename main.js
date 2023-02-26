@@ -3,13 +3,13 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 
 const scrapper = async () => {
-    const browser = await puppeteer.launch({headless: false})
+    const browser = await puppeteer.launch({headless: true})
     const page = await browser.newPage()
     await page.goto('https://opensea.io/collection/proof-moonbirds')
     await page.waitForSelector('.fresnel-container', {hidden: false});
-    // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    await page.evaluate(() => { document.querySelectorAll("div.Asset--loaded") });
-    // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
+    await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
+    // await page.evaluate(() => { document.querySelectorAll("div.Asset--loaded") });
+
       
     offers = await _scrollAndFetchOffers(page, 20)
     // console.log(offers);
@@ -18,7 +18,7 @@ const scrapper = async () => {
       
       // clearInterval(interval);
       await page.evaluate(() => { window.scrollBy(0, -window.innerHeight); });
-      // await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
+
     },1000)
         // await browser.close()
         
@@ -58,15 +58,3 @@ const scrapper = async () => {
       }, 120);
     }), resultSize);
   }
-
-  // async function _extractTotalOffers(page) {
-  //   try {
-  //     // set timeout to 1 sec, no need to extensively wait since page should be loaded already
-  //     const element = await page.waitForSelector('.AssetSearchView--results-count', {timeout: 1000});
-  //     const resultsText = await element.evaluate(el => el.textContent); // grab the textContent from the element, by evaluating this function in the browser context
-  //     const dotsRemoved = resultsText.replace(/\./g,'');
-  //     return Number(dotsRemoved.split(" ")[0]);
-  //   } catch (err) {
-  //     return undefined;
-  //   }
-  // }
