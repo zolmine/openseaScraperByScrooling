@@ -5,21 +5,21 @@ puppeteer.use(StealthPlugin());
 const scrapper = async () => {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
-    await page.goto('https://opensea.io/collection/cool-cats-nft?search[sortAscending]=false&search[sortBy]=LISTING_DATE&search[toggles][0]=BUY_NOW')
-    await page.waitForSelector('.cf-browser-verification', {hidden: false});
-    await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
+    await page.goto('https://opensea.io/collection/proof-moonbirds')
+    await page.waitForSelector('.fresnel-container', {hidden: false});
+    // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
+    await page.evaluate(() => { document.querySelectorAll("div.Asset--loaded") });
     // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
-    
+      
     offers = await _scrollAndFetchOffers(page, 20)
-    console.log(offers);
-    // const interval = setInterval( async () => {
+    // console.log(offers);
+    const interval = setInterval( async () => {
       
       
-    //   // clearInterval(interval);
-    //   await page.evaluate(() => { window.scrollBy(0, -window.innerHeight); });
-    //   // await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
-    // },1000)
+      // clearInterval(interval);
+      await page.evaluate(() => { window.scrollBy(0, -window.innerHeight); });
+      // await page.evaluate(() => { document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click(); });
+    },1000)
         // await browser.close()
         
     }

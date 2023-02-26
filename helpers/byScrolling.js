@@ -13,12 +13,19 @@
 // to save all scraped data
 const dict = {};
 
+// ardsArray.forEach(item => {
+//   nfts.push({
+//     "name": item.innerText.split
+//   })
+//   console.log(item.innerText)
+// })
+
 // fetches offers that are currently visible on the page
 // and save them to the passed dictionary, with the slug being the key.
 // When a collection is already in the dict it will be overwritten.
 function fetchOffers(dict) {
     
-  const cardsNodeList = document.querySelectorAll(".Asset--anchor");
+  const cardsNodeList = document.querySelectorAll("div.Asset--loaded");
   const cardsArray = Array.prototype.slice.call(cardsNodeList);
   cardsArray.forEach(card => {
     // alert(card)
@@ -45,14 +52,14 @@ function fetchOffers(dict) {
 }
 function _extractName(card) {
   try {
-    return card.children[1].children[0].children[0].children[0].innerText;
+    return card.innerText.split("\n")[0];
   } catch (err) {
 
   }
 }
 function _extractTokenId(card) {
   try {
-    const href = card.getAttribute("href") || "";
+    // const href = card.getAttribute("href") || "";
     const tokenId = href.split("/").slice(-1).pop();
     return tokenId === "" ? undefined : Number(tokenId); // catch case where tokenId is empty string
   } catch(err) {
@@ -69,14 +76,14 @@ function _extractOfferUrl(card) {
 }
 function _extractDisplayImageUrl(card) {
   try {
-    return card.querySelector('.AssetMedia--img').lastElementChild.children[0].src;
+    return card.querySelector("div.AssetMedia--img").querySelector("img").currentSrc;
   } catch(err) {
     return undefined;
   }
 }
 function _extractFloorPrice(card) {
   try {
-    const floorPriceStr = card.querySelector('.Price--amount').innerHTML;
+    const floorPriceStr = card.innerText.split("\n")[1];
     const currencyIsEth = false;
     // const floorPriceStr = priceSection.querySelectorAll(":scope > div")[1].textContent.split(",").join("."); // replace comma with dot
     const floorPrice = Number(floorPriceStr);
