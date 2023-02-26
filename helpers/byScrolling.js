@@ -70,10 +70,10 @@ function _extractTokenId(card) {
 
 function _extractOfferUrl(card) {
   try {
-    const href = card.getAttribute("href");
-    return href ? `https://opensea.io${href}` : undefined;
-  } catch(err) {
-    return undefined;
+    const href = card.querySelector(".Asset--anchor").getAttribute("href")
+    return href ? `https://opensea.io${href}` : undefined
+  } catch(Error) {
+    return undefined
   }
 }
 function _extractDisplayImageUrl(card) {
