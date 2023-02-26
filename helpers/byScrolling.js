@@ -60,7 +60,6 @@ function _extractName(card) {
 function _extractTokenId(card) {
   try {
     const href = card.querySelector(".Asset--anchor").getAttribute("href") || ""
-    console.log(href)
     const tokenId = href.split("/").slice(-1).pop()
     return tokenId === "" ? undefined : Number(tokenId)
   } catch(Error) {
