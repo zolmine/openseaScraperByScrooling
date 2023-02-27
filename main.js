@@ -1,62 +1,14 @@
-const puppeteer = require('puppeteer-extra')
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
+const DeltaOpenseaScraper = require("./src")
 
-const scrapper = async () => {
-    const browser = await puppeteer.launch({headless: false})
-    const page = await browser.newPage()
-    await page.goto('https://opensea.io/collection/proof-moonbirds')
-    await page.waitForSelector('.fresnel-container', {hidden: false});
-    // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    // await page.evaluate(() => { document.querySelectorAll("div.Asset--loaded") });
-    await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")})
+// which nft project to scrape?
+const slug = "cool-cats-nft";
 
-      
-    offers = await _scrollAndFetchOffers(page, 200)
-    // console.log(offers);
-    const interval = setInterval( async () => {
-      
-      
-      // clearInterval(interval);
-      await page.evaluate(() => { window.scrollBy(0, -window.innerHeight); });
+// how many offers uu want 
+const resultSize = 40; 
 
-    },1000)
-    console.log(offers);
-    await browser.close()
-        
-    }
+(async => {
+    const offers =  DeltaOpenseaScraper.scrapper(slug, resultSize)
 
-    scrapper()
-    
-    // async function _reScrap(page,val) {
-    //   return await 
-    // }
-    
-    async function _scrollAndFetchOffers(page, resultSize) {
-      return await page.evaluate((resultSize) => new Promise((resolve) => {
-        // keep in mind inside the browser context we have the global variable "dict" initialized
-        // defined inside src/helpers/offersByScrollingHelperFunctions.js
-        let currentScrollTop = -1;
-        const interval = setInterval(() => {
-          // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
-          window.scrollBy(0, 50);
-          // fetchOffers is a function that is exposed through page.addScript() and
-          // is defined inside src/helpers/offersByScrollingHelperFunctions.js
-          fetchOffers(dict);
-          
-          const endOfPageReached = document.documentElement.scrollTop === currentScrollTop;
-          const enoughItemsFetched = Object.keys(dict).length >= resultSize;
-          
-          if(!endOfPageReached && !enoughItemsFetched) {
-            currentScrollTop = document.documentElement.scrollTop;
-          // document.querySelector('.AssetSearchView--results').children[1].children[0].children[0].click()
-          // window.scrollBy(0, -window.innerHeight);
-          return;
+    console.log(offers)
+})();
 
-        }
-        clearInterval(interval);
-        resolve(dict);
-      }, 120);
-    }), resultSize);
-  }

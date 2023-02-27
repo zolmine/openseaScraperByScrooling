@@ -11,7 +11,7 @@ function fetchOffers(dict) {
     const tokenId = _extractTokenId(card);
     const offerUrl = _extractOfferUrl(card);
     const displayImageUrl = _extractDisplayImageUrl(card);
-    if (floorPrice && name) {
+    if (floorPrice && name &&  !displayImageUrl.includes("data:image/gif")) {
       const uniqIdentifier = `${name}_${tokenId || "unknownTokenId"}`;
       if( uniqIdentifier in dict){
         return dict
@@ -61,8 +61,11 @@ function _extractDisplayImageUrl(card) {
 }
 function _extractFloorPrice(card) {
   try {
-    const floorPriceStr = card.innerText.split("\n")[1];
-    const floorPrice = Number(floorPriceStr);
+    floorPriceStr = card.innerText.split("\n")[1]
+    if (floorPriceStr === "#") {
+      floorPriceStr = card.innerText.split("\n")[3].replace(",",".")
+    }
+    const floorPrice = Number(floorPriceStr)
     return {
       amount: floorPrice,
     }
