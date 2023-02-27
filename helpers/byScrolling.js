@@ -1,34 +1,11 @@
-/**
- * === HELPER FUNCTIONS FOR : OpenseaScraper.offersByScrolling() ===
- * These are all functions that need to be exposed inside
- * puppeteers page.evaluate() function (inside the chromium instance)
- * additionally to the functions we also need a global variable
- * "dict" that holds a dictionary of all scraped offers
- *
- * To make it more readable we outsource this to a seperate file,
- * then load the file via puppeteers page.addScriptTag() function
- */
 
-// initialize dict global variable inside puppeteer chromium instance
-// to save all scraped data
 const dict = {};
 
-// ardsArray.forEach(item => {
-//   nfts.push({
-//     "name": item.innerText.split
-//   })
-//   console.log(item.innerText)
-// })
-
-// fetches offers that are currently visible on the page
-// and save them to the passed dictionary, with the slug being the key.
-// When a collection is already in the dict it will be overwritten.
 function fetchOffers(dict) {
     
   const cardsNodeList = document.querySelectorAll("div.Asset--loaded");
   const cardsArray = Array.prototype.slice.call(cardsNodeList);
   cardsArray.forEach(card => {
-    // alert(card)
     const floorPrice = _extractFloorPrice(card);
     const name = _extractName(card);
     const tokenId = _extractTokenId(card);
@@ -85,8 +62,6 @@ function _extractDisplayImageUrl(card) {
 function _extractFloorPrice(card) {
   try {
     const floorPriceStr = card.innerText.split("\n")[1];
-    const currencyIsEth = false;
-    // const floorPriceStr = priceSection.querySelectorAll(":scope > div")[1].textContent.split(",").join("."); // replace comma with dot
     const floorPrice = Number(floorPriceStr);
     return {
       amount: floorPrice,
@@ -94,8 +69,4 @@ function _extractFloorPrice(card) {
   } catch(err) {
     return undefined;
   }
-}
-
-module.exports = {
-  fetchOffers
 }

@@ -8,11 +8,12 @@ const scrapper = async () => {
     await page.goto('https://opensea.io/collection/proof-moonbirds')
     await page.waitForSelector('.fresnel-container', {hidden: false});
     // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
-    await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
+    // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
     // await page.evaluate(() => { document.querySelectorAll("div.Asset--loaded") });
+    await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")})
 
       
-    offers = await _scrollAndFetchOffers(page, 20)
+    offers = await _scrollAndFetchOffers(page, 200)
     // console.log(offers);
     const interval = setInterval( async () => {
       
@@ -21,7 +22,8 @@ const scrapper = async () => {
       await page.evaluate(() => { window.scrollBy(0, -window.innerHeight); });
 
     },1000)
-        // await browser.close()
+    console.log(offers);
+    await browser.close()
         
     }
 
