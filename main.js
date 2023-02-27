@@ -3,10 +3,11 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 
 const scrapper = async () => {
-    const browser = await puppeteer.launch({headless: true})
+    const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
     await page.goto('https://opensea.io/collection/proof-moonbirds')
     await page.waitForSelector('.fresnel-container', {hidden: false});
+    // await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
     await page.addScriptTag({path: require.resolve("./helpers/byScrolling.js")});
     // await page.evaluate(() => { document.querySelectorAll("div.Asset--loaded") });
 
@@ -23,8 +24,7 @@ const scrapper = async () => {
         // await browser.close()
         
     }
-  
-    
+
     scrapper()
     
     // async function _reScrap(page,val) {

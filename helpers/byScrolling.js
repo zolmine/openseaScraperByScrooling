@@ -95,3 +95,7 @@ function _extractFloorPrice(card) {
     return undefined;
   }
 }
+
+module.exports = {
+  fetchOffers
+}
