@@ -11,12 +11,12 @@ To use the OpenSea Scraper, you need to have the following:
 #### You can download and install Node.js from the official website: https://nodejs.org/en/
 
 ## Installation
-    1 -  Clone or download the project files from GitHub: 
+1 -  Clone or download the project files from GitHub: 
             https://github.com/zolmine/openseaScraperByScrooling
 
-    2 - Navigate to the project directory in your terminal.
+2 - Navigate to the project directory in your terminal.
 
-    3 - Install the required dependencies using the following command:
+3 - Install the required dependencies using the following command:
 
 ```bash
     npm install
