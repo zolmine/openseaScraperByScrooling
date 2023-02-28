@@ -17,9 +17,10 @@ To use the OpenSea Scraper, you need to have the following:
     2 - Navigate to the project directory in your terminal.
 
     3 - Install the required dependencies using the following command:
-        ```bash
+
+```bash
     npm install
-    ```
+```
 
 
 
