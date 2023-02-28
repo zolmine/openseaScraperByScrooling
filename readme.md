@@ -24,7 +24,7 @@ npm install opensea-scraper
 ```
 ## Support
 
-If you encounter any issues or have any questions about the OpenSea Scraper, please open an issue on the project's GitHub repository: ttps://github.com/zolmine/openseaScraperByScrooling
+If you encounter any issues or have any questions about the OpenSea Scraper, please open an issue on the project's GitHub repository: https://github.com/zolmine/openseaScraperByScrooling
 
 
 
