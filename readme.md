@@ -1,4 +1,3 @@
-
 # OpenSea Scraper By Scrolling
 The OpenSea Scraper is a Node.js script that allows you to scrape live data from the OpenSea marketplace, which is one of the largest decentralized marketplaces for non-fungible tokens (NFTs). This script allows you to extract data from OpenSea in a structured and automated manner, which can be useful for various applications, including data analysis, research, and monitoring the marketplace, and also using it for snipping tools.
 
