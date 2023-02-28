@@ -19,9 +19,6 @@ To use the OpenSea Scraper, you need to have the following:
     3 - Install the required dependencies using the following command:
 
 
-```bash
-npm install opensea-scraper
-```
 ## Support
 
 If you encounter any issues or have any questions about the OpenSea Scraper, please open an issue on the project's GitHub repository: https://github.com/zolmine/openseaScraperByScrooling
