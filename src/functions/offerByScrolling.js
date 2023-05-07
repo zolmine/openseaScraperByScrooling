@@ -3,7 +3,7 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 
 const scrapper = async (slug, howManyOffers) => {
-    const browser = await puppeteer.launch({headless: true})
+    const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
     await page.goto(`https://opensea.io/collection/${slug}`)
     await page.waitForSelector('.fresnel-container', {hidden: false});
